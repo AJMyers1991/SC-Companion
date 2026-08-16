@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SCCompanion.Views.WikeloDetailPage"
+             BackgroundColor="#0D0D0D"
+             Shell.NavBarIsVisible="False">
+
+    <ContentPage.Resources>
+        <Style x:Key="DetailCardStyle"
+               TargetType="Border">
+            <Setter Property="BackgroundColor" Value="#242424" />
+            <Setter Property="Stroke" Value="#333333" />
+            <Setter Property="StrokeThickness" Value="1" />
+            <Setter Property="StrokeShape" Value="RoundRectangle 14" />
+            <Setter Property="Padding" Value="20,16" />
+            <Setter Property="Margin" Value="0,8" />
+        </Style>
+
+        <Style x:Key="SectionTitleStyle"
+               TargetType="Label">
+            <Setter Property="FontFamily" Value="OpenSansSemibold" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="TextColor" Value="#FFFFFF" />
+            <Setter Property="Margin" Value="0,0,0,8" />
+        </Style>
+
+        <Style x:Key="DetailLabelStyle"
+               TargetType="Label">
+            <Setter Property="FontFamily" Value="OpenSansRegular" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="TextColor" Value="#A0A0A0" />
+            <Setter Property="LineBreakMode" Value="WordWrap" />
+        </Style>
+
+        <Style x:Key="ItemButtonStyle"
+               TargetType="Button">
+            <Setter Property="FontFamily" Value="OpenSansSemibold" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="TextColor" Value="White" />
+            <Setter Property="CornerRadius" Value="8" />
+            <Setter Property="MinimumHeightRequest" Value="44" />
+            <Setter Property="MinimumWidthRequest" Value="44" />
+            <Setter Property="Padding" Value="12,8" />
+        </Style>
+
+        <Style x:Key="QuantityEntryStyle"
+               TargetType="Entry">
+            <Setter Property="FontFamily" Value="OpenSansRegular" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="TextColor" Value="#FFFFFF" />
+            <Setter Property="BackgroundColor" Value="#333333" />
+            <Setter Property="WidthRequest" Value="80" />
+            <Setter Property="HeightRequest" Value="44" />
+            <Setter Property="HorizontalTextAlignment" Value="Center" />
+            <Setter Property="VerticalTextAlignment" Value="Center" />
+            <Setter Property="Keyboard" Value="Numeric" />
+        </Style>
+
+        <Style x:Key="RewardItemStyle"
+               TargetType="Label">
+            <Setter Property="FontFamily" Value="OpenSansRegular" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="TextColor" Value="#FFFFFF" />
+            <Setter Property="Padding" Value="12,8" />
+            <Setter Property="BackgroundColor" Value="#333333" />
+            <Setter Property="LineBreakMode" Value="WordWrap" />
+        </Style>
+
+        <Style x:Key="RequiredItemCardStyle"
+               TargetType="Border">
+            <Setter Property="BackgroundColor" Value="#1A1A1A" />
+            <Setter Property="Stroke" Value="#333333" />
+            <Setter Property="StrokeThickness" Value="1" />
+            <Setter Property="StrokeShape" Value="RoundRectangle 10" />
+            <Setter Property="Padding" Value="16,12" />
+            <Setter Property="Margin" Value="0,4" />
+        </Style>
+    </ContentPage.Resources>
+
+    <ScrollView Padding="18,16">
+        <VerticalStackLayout Spacing="0"
+                             MaximumWidthRequest="820"
+                             HorizontalOptions="Fill">
+
+            <!-- Trade Info Card -->
+            <Border Style="{StaticResource DetailCardStyle}">
+                <Grid>
+                    <VerticalStackLayout Spacing="16">
+                        <Label Text="{Binding TradeTitle}"
+                               FontFamily="OpenSansSemibold"
+                               FontSize="20"
+                               TextColor="#FFFFFF"
+                               HorizontalTextAlignment="Center"
+                               LineBreakMode="WordWrap"
+                               MaxLines="3" />
+
+                        <Grid VerticalOptions="Start">
+                            <!-- Reward Image -->
+                            <Image Source="{Binding RewardImageSource}"
+                                   WidthRequest="280"
+                                   HeightRequest="220"
+                                   Aspect="AspectFit"
+                                   HorizontalOptions="Center" />
+                            <ActivityIndicator IsRunning="{Binding IsImageLoading}"
+                                               IsVisible="{Binding IsImageLoading}"
+                                               Color="#FFFFFF"
+                                               WidthRequest="24"
+                                               HeightRequest="24"
+                                               HorizontalOptions="Center"
+                                               VerticalOptions="Center" />
+                        </Grid>
+
+                        <!-- Required Reputation -->
+                        <Label Text="{Binding RequiredReputationText}"
+                               Style="{StaticResource DetailLabelStyle}"
+                               HorizontalTextAlignment="Center" />
+
+                        <!-- Category -->
+                        <Label Text="{Binding CategoryText}"
+                               Style="{StaticResource DetailLabelStyle}"
+                               HorizontalTextAlignment="Center" />
+                    </VerticalStackLayout>
+                    
+                    <!-- Favorite Star Button Overlay -->
+                    <Button Text="{Binding FavoriteGlyph}"
+                            TextColor="{Binding FavoriteColor}"
+                            BackgroundColor="Transparent"
+                            FontSize="22"
+                            WidthRequest="44"
+                            HeightRequest="44"
+                            Padding="0"
+                            HorizontalOptions="End"
+                            VerticalOptions="Start"
+                            Clicked="OnFavoriteToggled" />
+                </Grid>
+            </Border>
+
+            <!-- Progress Card -->
+            <Border Style="{StaticResource DetailCardStyle}">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="Progress"
+                           Style="{StaticResource SectionTitleStyle}" />
+                    
+                    <Grid RowDefinitions="Auto,Auto,Auto"
+                          RowSpacing="8">
+                        <Label Grid.Row="0"
+                               Text="{Binding ProgressPercentageText}"
+                               FontFamily="OpenSansSemibold"
+                               FontSize="16"
+                               TextColor="{Binding ProgressColor}"
+                               HorizontalTextAlignment="Center" />
+                        <ProgressBar Grid.Row="1"
+                                     Progress="{Binding ProgressFraction}"
+                                     ProgressColor="{Binding ProgressColor}"
+                                     BackgroundColor="#333333"
+                                     HeightRequest="8" />
+                        <Label Grid.Row="2"
+                               Text="{Binding ProgressQuantityText}"
+                               FontFamily="OpenSansRegular"
+                               FontSize="14"
+                               TextColor="#A0A0A0"
+                               HorizontalTextAlignment="Center" />
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Rewards Card -->
+            <Border Style="{StaticResource DetailCardStyle}">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="Rewards"
+                           Style="{StaticResource SectionTitleStyle}"
+                           HorizontalTextAlignment="Center" />
+                    
+                    <StackLayout BindableLayout.ItemsSource="{Binding Rewards}"
+                                 Spacing="6">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <Label Text="{Binding .}"
+                                       Style="{StaticResource RewardItemStyle}"
+                                       HorizontalTextAlignment="Center" />
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </StackLayout>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Required Items Card -->
+            <Border Style="{StaticResource DetailCardStyle}">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="Required Items"
+                           Style="{StaticResource SectionTitleStyle}"
+                           HorizontalTextAlignment="Center" />
+                    
+                    <StackLayout BindableLayout.ItemsSource="{Binding RequiredItems}"
+                                 Spacing="0">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <Border Style="{StaticResource RequiredItemCardStyle}">
+                                    <VerticalStackLayout Spacing="12">
+                                        <!-- Item Name and Required Quantity -->
+                                        <VerticalStackLayout Spacing="4"
+                                                             HorizontalOptions="Center">
+                                            <Label Text="{Binding Name}"
+                                                   FontFamily="OpenSansSemibold"
+                                                   FontSize="14"
+                                                   TextColor="#FFFFFF"
+                                                   LineBreakMode="WordWrap"
+                                                   MaxLines="2"
+                                                   HorizontalTextAlignment="Center" />
+                                            <Label Text="{Binding RequiredQuantityText}"
+                                                   FontFamily="OpenSansRegular"
+                                                   FontSize="12"
+                                                   TextColor="#A0A0A0"
+                                                   HorizontalTextAlignment="Center" />
+                                        </VerticalStackLayout>
+
+                                        <!-- Control Row -->
+                                        <Grid ColumnDefinitions="Auto,*,Auto,Auto,Auto"
+                                              ColumnSpacing="8"
+                                              HorizontalOptions="Fill">
+                                            
+                                            <!-- Complete/Reset Button -->
+                                            <Button Grid.Column="0"
+                                                    Text="{Binding CompleteButtonText}"
+                                                    Style="{StaticResource ItemButtonStyle}"
+                                                    WidthRequest="68"
+                                                    HorizontalOptions="Start"
+                                                    BackgroundColor="{Binding CompleteButtonColor}"
+                                                    CommandParameter="{Binding .}"
+                                                    Clicked="OnCompleteResetClicked" />
+
+                                            <!-- Minus Button -->
+                                            <Button Grid.Column="2"
+                                                    Text="−"
+                                                    Style="{StaticResource ItemButtonStyle}"
+                                                    BackgroundColor="#7A3434"
+                                                    BorderColor="#934A4A"
+                                                    BorderWidth="1"
+                                                    CommandParameter="{Binding .}"
+                                                    Clicked="OnQuantityDecrement" />
+
+                                            <!-- Quantity Entry -->
+                                            <Entry Grid.Column="3"
+                                                   Text="{Binding OwnedQuantity, Mode=OneWay}"
+                                                   Style="{StaticResource QuantityEntryStyle}"
+                                                   BindingContext="{Binding .}"
+                                                   Completed="OnQuantityEntryCompleted"
+                                                   Unfocused="OnQuantityEntryUnfocused"
+                                                   HandlerChanged="OnQuantityEntryHandlerChanged" />
+
+                                            <!-- Plus Button -->
+                                            <Button Grid.Column="4"
+                                                    Text="+"
+                                                    Style="{StaticResource ItemButtonStyle}"
+                                                    BackgroundColor="#3F6B46"
+                                                    BorderColor="#557F5C"
+                                                    BorderWidth="1"
+                                                    CommandParameter="{Binding .}"
+                                                    Clicked="OnQuantityIncrement" />
+                                        </Grid>
+                                    </VerticalStackLayout>
+                                </Border>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </StackLayout>
+                </VerticalStackLayout>
+            </Border>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

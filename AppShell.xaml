@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="SCCompanion.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:SCCompanion.Views"
+    Shell.FlyoutBehavior="Disabled">
+
+    <TabBar Route="main">
+        <ShellContent Route="home"   Title="Home"     Icon="icon_home.png"
+                      ContentTemplate="{DataTemplate views:WelcomePage}" />
+        <ShellContent x:Name="ShipsShellContent" Route="ships" Title="Ships" Icon="icon_ships.png" />
+        <ShellContent x:Name="TradeShellContent" Route="trade" Title="Trade" Icon="icon_trade.png" />
+        <ShellContent x:Name="CraftingShellContent" Route="craft" Title="Crafting" Icon="icon_crafting.png" />
+        <ShellContent Route="more"   Title="More"     Icon="icon_more.png"
+                      ContentTemplate="{DataTemplate views:MorePage}" />
+    </TabBar>
+
+</Shell>

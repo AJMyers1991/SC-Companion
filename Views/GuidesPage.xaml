@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:SCCompanion.Models"
+             x:Class="SCCompanion.Views.GuidesPage"
+             Title="Guides"
+             BackgroundColor="#0D0D0D"
+             Shell.NavBarIsVisible="False">
+
+    <ContentPage.Resources>
+        <Style x:Key="FolderCardStyle" TargetType="Border">
+            <Setter Property="BackgroundColor" Value="#242424" />
+            <Setter Property="StrokeThickness" Value="0" />
+            <Setter Property="StrokeShape" Value="RoundRectangle 12" />
+            <Setter Property="Padding" Value="12" />
+        </Style>
+
+        <Style x:Key="FolderLabelStyle" TargetType="Label">
+            <Setter Property="FontFamily" Value="OpenSansSemibold" />
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="TextColor" Value="#FFFFFF" />
+            <Setter Property="HorizontalTextAlignment" Value="Center" />
+            <Setter Property="LineBreakMode" Value="TailTruncation" />
+            <Setter Property="MaxLines" Value="2" />
+        </Style>
+
+        <Style x:Key="GuideRowCardStyle" TargetType="Border">
+            <Setter Property="BackgroundColor" Value="#242424" />
+            <Setter Property="StrokeThickness" Value="0" />
+            <Setter Property="StrokeShape" Value="RoundRectangle 8" />
+            <Setter Property="Padding" Value="14" />
+            <Setter Property="Margin" Value="0,3" />
+        </Style>
+
+        <Style x:Key="GuideTitleStyle" TargetType="Label">
+            <Setter Property="FontFamily" Value="OpenSansSemibold" />
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="TextColor" Value="#FFFFFF" />
+            <Setter Property="LineBreakMode" Value="TailTruncation" />
+            <Setter Property="MaxLines" Value="1" />
+        </Style>
+
+        <Style x:Key="GuideDescriptionStyle" TargetType="Label">
+            <Setter Property="FontFamily" Value="OpenSansRegular" />
+            <Setter Property="FontSize" Value="11" />
+            <Setter Property="TextColor" Value="#A0A0A0" />
+            <Setter Property="LineBreakMode" Value="TailTruncation" />
+            <Setter Property="MaxLines" Value="1" />
+        </Style>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto,Auto,Auto,*">
+        <!-- Title section -->
+        <VerticalStackLayout Grid.Row="0"
+                             Spacing="3"
+                             Margin="16,12,16,12">
+            <Label Text="Guides and Resources"
+                   FontFamily="OpenSansSemibold"
+                   FontSize="20"
+                   TextColor="#FFFFFF"
+                   HorizontalTextAlignment="Center"
+                   SemanticProperties.HeadingLevel="Level1" />
+            <Label Text="Data provided by various dedicated members of the Star Citizen community"
+                   FontFamily="OpenSansRegular"
+                   FontSize="11"
+                   TextColor="#A0A0A0"
+                   HorizontalTextAlignment="Center" />
+        </VerticalStackLayout>
+
+        <!-- Search bar -->
+        <SearchBar Grid.Row="1"
+                   x:Name="GuideSearchBar"
+                   Placeholder="Search guides..."
+                   FontFamily="OpenSansRegular"
+                   FontSize="14"
+                   TextColor="#FFFFFF"
+                   PlaceholderColor="#A0A0A0"
+                   BackgroundColor="#242424"
+                   Margin="16,0,16,12"
+                   TextChanged="OnSearchTextChanged" />
+
+        <!-- Result count -->
+        <Label Grid.Row="2"
+               x:Name="ResultCountLabel"
+               FontFamily="OpenSansRegular"
+               FontSize="11"
+               TextColor="#A0A0A0"
+               Margin="16,0,16,6"
+               IsVisible="False" />
+
+        <!-- Content area -->
+        <Grid Grid.Row="3" Margin="16,0,16,12">
+            <!-- Folder grid (root view) -->
+            <CollectionView x:Name="FolderCollectionView"
+                            ItemsSource="{Binding Folders}"
+                            SelectionMode="None"
+                            HorizontalOptions="Center"
+                            MaximumWidthRequest="520">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical"
+                                     Span="3"
+                                     HorizontalItemSpacing="10"
+                                     VerticalItemSpacing="10" />
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:GuideFolderItem">
+                        <Border Style="{StaticResource FolderCardStyle}"
+                                WidthRequest="{Binding CardSize}"
+                                HeightRequest="{Binding CardSize}"
+                                HorizontalOptions="Center">
+                            <Grid>
+                                <!-- Transparent underlay provides folder click target -->
+                                <Button BackgroundColor="Transparent"
+                                        BorderWidth="0"
+                                        Padding="0"
+                                        ZIndex="0"
+                                        Clicked="OnFolderClicked"
+                                        CommandParameter="{Binding .}" />
+
+                                <!-- Visual folder content -->
+                                <VerticalStackLayout InputTransparent="True"
+                                                     ZIndex="1"
+                                                     Spacing="8"
+                                                     Margin="8,12,8,8"
+                                                     HorizontalOptions="Center"
+                                                     VerticalOptions="Center">
+                                    <Image Source="guide_folder.svg"
+                                           WidthRequest="48"
+                                           HeightRequest="48"
+                                           HorizontalOptions="Center" />
+                                    <Label Text="{Binding Name}"
+                                           Style="{StaticResource FolderLabelStyle}" />
+                                </VerticalStackLayout>
+
+                                <!-- Star favorite button -->
+                                <ImageButton Source="{Binding FavoriteIconSource}"
+                                             CommandParameter="{Binding .}"
+                                             Clicked="OnFolderFavoriteClicked"
+                                             BackgroundColor="Transparent"
+                                             WidthRequest="40"
+                                             HeightRequest="40"
+                                             Padding="10"
+                                             Margin="0,-4,-4,0"
+                                             HorizontalOptions="End"
+                                             VerticalOptions="Start"
+                                             ZIndex="2" />
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <!-- Guide list (search results and folder contents) -->
+            <CollectionView x:Name="GuideCollectionView"
+                            ItemsSource="{Binding VisibleGuides}"
+                            SelectionMode="None"
+                            IsVisible="False">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:GuideDefinition">
+                        <Border Style="{StaticResource GuideRowCardStyle}">
+                            <Grid>
+                                <Button BackgroundColor="Transparent"
+                                        BorderWidth="0"
+                                        Padding="0"
+                                        Clicked="OnGuideClicked"
+                                        CommandParameter="{Binding .}" />
+                                <VerticalStackLayout InputTransparent="True"
+                                                     Spacing="2"
+                                                     VerticalOptions="Center">
+                                    <Label Text="{Binding Name}"
+                                           Style="{StaticResource GuideTitleStyle}" />
+                                    <Label Text="{Binding PageDescription}"
+                                           Style="{StaticResource GuideDescriptionStyle}" />
+                                </VerticalStackLayout>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <!-- Empty state -->
+            <Label x:Name="EmptyStateLabel"
+                   Text="No results"
+                   FontFamily="OpenSansRegular"
+                   FontSize="14"
+                   TextColor="#A0A0A0"
+                   HorizontalTextAlignment="Center"
+                   VerticalTextAlignment="Center"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   IsVisible="False" />
+        </Grid>
+    </Grid>
+</ContentPage>

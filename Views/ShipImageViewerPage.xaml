@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SCCompanion.Views.ShipImageViewerPage" BackgroundColor="Black" Shell.NavBarIsVisible="False" Shell.TabBarIsVisible="False">
+    <Grid RowDefinitions="Auto,*">
+        <Grid x:Name="Toolbar" ColumnDefinitions="48,*" Padding="8,5" BackgroundColor="Black">
+            <Button Text="‹" FontSize="32" BackgroundColor="Transparent" TextColor="White" Padding="0" Clicked="OnBackClicked"/>
+            <Label x:Name="TitleLabel" Grid.Column="1" Text="Image Viewer" TextColor="White" FontFamily="OpenSansSemibold" FontSize="17" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Margin="0,0,48,0"/>
+        </Grid>
+        <WebView x:Name="ImageWebView" Grid.Row="1" BackgroundColor="Black"/>
+        <Button x:Name="LandscapeBackButton" Grid.RowSpan="2" Text="‹" FontSize="32"
+                BackgroundColor="#99000000" TextColor="White" BorderWidth="0" CornerRadius="24"
+                WidthRequest="48" HeightRequest="48" Margin="12" Padding="0"
+                HorizontalOptions="Start" VerticalOptions="Start" ZIndex="10" IsVisible="False"
+                Clicked="OnBackClicked"/>
+    </Grid>
+</ContentPage>

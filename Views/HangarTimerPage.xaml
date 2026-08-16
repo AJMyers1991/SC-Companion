@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SCCompanion.Views.HangarTimerPage"
+             Title="Executive Hangar Timer"
+             BackgroundColor="#0D0D0D"
+             Shell.NavBarIsVisible="False">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="12,8" HorizontalOptions="Center" MaximumWidthRequest="400">
+            
+            <!-- Title -->
+            <Label Text="Executive Hangar Timer"
+                   FontFamily="OpenSansSemibold"
+                   FontSize="22"
+                   TextColor="White"
+                   HorizontalTextAlignment="Center"
+                   Margin="0,0,0,2" />
+            
+            <!-- Attribution -->
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0,0,0,16">
+                <Label Text="Data provided by "
+                       FontFamily="OpenSansRegular"
+                       FontSize="12"
+                       TextColor="#A0A0A0" />
+                <Label Text="contestedzonetimers.com"
+                       FontFamily="OpenSansRegular"
+                       FontSize="12"
+                       TextColor="#007ACC"
+                       TextDecorations="Underline">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnAttributionTapped" />
+                    </Label.GestureRecognizers>
+                </Label>
+            </StackLayout>
+
+            <!-- Loading Panel -->
+            <VerticalStackLayout x:Name="LoadingPanel" IsVisible="True" HorizontalOptions="Center" Spacing="16">
+                <ActivityIndicator IsRunning="True" Color="#FFFFFF" />
+                <Label Text="Loading timer..." 
+                       FontFamily="OpenSansRegular"
+                       FontSize="16"
+                       TextColor="White"
+                       HorizontalTextAlignment="Center" />
+            </VerticalStackLayout>
+
+            <!-- Error Panel -->
+            <VerticalStackLayout x:Name="ErrorPanel" IsVisible="False" HorizontalOptions="Center" Spacing="16">
+                <Label x:Name="ErrorLabel"
+                       FontFamily="OpenSansRegular"
+                       FontSize="16"
+                       TextColor="#FF1744"
+                       HorizontalTextAlignment="Center" />
+                <Button Text="Retry"
+                        BackgroundColor="#129600"
+                        TextColor="White"
+                        FontFamily="OpenSansSemibold"
+                        CornerRadius="6"
+                        Clicked="OnRetryClicked" />
+            </VerticalStackLayout>
+
+            <!-- Timer Panel -->
+            <VerticalStackLayout x:Name="TimerPanel" IsVisible="False" HorizontalOptions="Center" Spacing="16">
+                
+                <!-- Phase Circles -->
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Spacing="12" Margin="0,16">
+                    <Ellipse x:Name="Light1" 
+                             WidthRequest="40" 
+                             HeightRequest="40"
+                             Fill="#FF1744" />
+                    <Ellipse x:Name="Light2" 
+                             WidthRequest="40" 
+                             HeightRequest="40"
+                             Fill="#FF1744" />
+                    <Ellipse x:Name="Light3" 
+                             WidthRequest="40" 
+                             HeightRequest="40"
+                             Fill="#FF1744" />
+                    <Ellipse x:Name="Light4" 
+                             WidthRequest="40" 
+                             HeightRequest="40"
+                             Fill="#FF1744" />
+                    <Ellipse x:Name="Light5" 
+                             WidthRequest="40" 
+                             HeightRequest="40"
+                             Fill="#FF1744" />
+                </StackLayout>
+
+                <!-- Status -->
+                <Label x:Name="StatusLabel"
+                       Text="Hangar Closed"
+                       FontFamily="OpenSansSemibold"
+                       FontSize="24"
+                       TextColor="#FF1744"
+                       HorizontalTextAlignment="Center"
+                       Margin="0,16,0,8" />
+
+                <!-- Countdown -->
+                <Label x:Name="CountdownLabel"
+                       Text="Opens in 0h 0m 0s"
+                       FontFamily="OpenSansRegular"
+                       FontSize="18"
+                       TextColor="#A0A0A0"
+                       HorizontalTextAlignment="Center"
+                       Margin="0,0,0,24" />
+
+                <!-- Cycle Explanation -->
+                <Label Text="Cycle: 2h Closed → 1h Open → 5min Reset"
+                       FontFamily="OpenSansRegular"
+                       FontSize="12"
+                       TextColor="#A0A0A0"
+                       HorizontalTextAlignment="Center" />
+                       
+            </VerticalStackLayout>
+            
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

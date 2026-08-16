@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="SCCompanion.Views.MorePage"
+             Title="More"
+             BackgroundColor="#0D0D0D">
+
+    <ContentPage.Resources>
+        <Style x:Key="ToolCardStyle" TargetType="Border">
+            <Setter Property="BackgroundColor" Value="#242424" />
+            <Setter Property="StrokeThickness" Value="0" />
+            <Setter Property="StrokeShape" Value="RoundRectangle 12" />
+            <Setter Property="Padding" Value="16" />
+            <Setter Property="HeightRequest" Value="100" />
+        </Style>
+
+        <Style x:Key="ToolLabelStyle" TargetType="Label">
+            <Setter Property="FontFamily" Value="OpenSansSemibold" />
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="TextColor" Value="#A0A0A0" />
+            <Setter Property="HorizontalTextAlignment" Value="Center" />
+            <Setter Property="LineBreakMode" Value="TailTruncation" />
+            <Setter Property="MaxLines" Value="2" />
+        </Style>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="*,Auto">
+        <!-- Scrollable tool cards. -->
+        <ScrollView Grid.Row="0">
+            <VerticalStackLayout Padding="12,8" Spacing="0">
+                <!-- Scrollable two-column tool grid; the open cell is reserved for future tools. -->
+                <Grid ColumnDefinitions="*,*"
+                      RowDefinitions="Auto,Auto,Auto"
+                      ColumnSpacing="12"
+                      RowSpacing="12">
+                    <Border Grid.Row="0" Grid.Column="0" Style="{StaticResource ToolCardStyle}">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnWikiClicked" />
+                        </Border.GestureRecognizers>
+                        <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="8">
+                            <Image Source="icon_wiki.png" WidthRequest="36" HeightRequest="36">
+                                <Image.Behaviors>
+                                    <toolkit:IconTintColorBehavior TintColor="#A0A0A0" />
+                                </Image.Behaviors>
+                            </Image>
+                            <Label Text="Star Citizen Wiki" Style="{StaticResource ToolLabelStyle}" />
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <Border Grid.Row="0" Grid.Column="1" Style="{StaticResource ToolCardStyle}">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnFinderClicked" />
+                        </Border.GestureRecognizers>
+                        <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="8">
+                            <Image Source="icon_find.png" WidthRequest="36" HeightRequest="36">
+                                <Image.Behaviors>
+                                    <toolkit:IconTintColorBehavior TintColor="#A0A0A0" />
+                                </Image.Behaviors>
+                            </Image>
+                            <Label Text="CStone Item Finder" Style="{StaticResource ToolLabelStyle}" />
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <Border Grid.Row="1" Grid.Column="0" Style="{StaticResource ToolCardStyle}">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnWikeloClicked" />
+                        </Border.GestureRecognizers>
+                        <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="8">
+                            <Image Source="icon_wikelo.png" WidthRequest="36" HeightRequest="36">
+                                <Image.Behaviors>
+                                    <toolkit:IconTintColorBehavior TintColor="#A0A0A0" />
+                                </Image.Behaviors>
+                            </Image>
+                            <Label Text="Wikelo Trades" Style="{StaticResource ToolLabelStyle}" />
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource ToolCardStyle}">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnHangarTimerClicked" />
+                        </Border.GestureRecognizers>
+                        <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="8">
+                            <Image Source="icon_exec.png" WidthRequest="36" HeightRequest="36">
+                                <Image.Behaviors>
+                                    <toolkit:IconTintColorBehavior TintColor="#A0A0A0" />
+                                </Image.Behaviors>
+                            </Image>
+                            <Label Text="Exec Timer" Style="{StaticResource ToolLabelStyle}" />
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <Border Grid.Row="2" Grid.Column="0" Style="{StaticResource ToolCardStyle}">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnGuidesClicked" />
+                        </Border.GestureRecognizers>
+                        <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="8">
+                            <Image Source="icon_guides.png" WidthRequest="36" HeightRequest="36">
+                                <Image.Behaviors>
+                                    <toolkit:IconTintColorBehavior TintColor="#A0A0A0" />
+                                </Image.Behaviors>
+                            </Image>
+                            <Label Text="Guides &amp; Resources" Style="{StaticResource ToolLabelStyle}" />
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Useful Links remains pinned across the bottom, matching the Kotlin screen. -->
+        <Border Grid.Row="1" Margin="12,8" Style="{StaticResource ToolCardStyle}">
+            <Border.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnUsefulLinksClicked" />
+            </Border.GestureRecognizers>
+            <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="8">
+                <Image Source="icon_links.png" WidthRequest="36" HeightRequest="36">
+                    <Image.Behaviors>
+                        <toolkit:IconTintColorBehavior TintColor="#A0A0A0" />
+                    </Image.Behaviors>
+                </Image>
+                <Label Text="Useful Links" Style="{StaticResource ToolLabelStyle}" />
+            </VerticalStackLayout>
+        </Border>
+    </Grid>
+</ContentPage>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Match Android system chrome and default control accents to the app's neutral palette. -->
+    <color name="colorPrimary">#1e1e22</color>
+    <color name="colorPrimaryDark">#1e1e22</color>
+    <color name="colorAccent">#FFFFFF</color>
+</resources>

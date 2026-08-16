@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:SCCompanion.Models"
+             x:Class="SCCompanion.Views.ShipDetailPage"
+             BackgroundColor="#0D0D0D" Shell.NavBarIsVisible="False" Shell.TabBarIsVisible="False">
+    <ContentPage.Resources>
+        <Style x:Key="Card" TargetType="Border"><Setter Property="BackgroundColor" Value="#242424"/><Setter Property="Stroke" Value="#333333"/><Setter Property="StrokeShape" Value="RoundRectangle 14"/><Setter Property="Padding" Value="14"/></Style>
+        <Style x:Key="Title" TargetType="Label"><Setter Property="TextColor" Value="White"/><Setter Property="FontFamily" Value="OpenSansSemibold"/><Setter Property="HorizontalTextAlignment" Value="Center"/></Style>
+        <Style x:Key="GrayButton" TargetType="Button"><Setter Property="BackgroundColor" Value="#404040"/><Setter Property="BorderColor" Value="#555555"/><Setter Property="BorderWidth" Value="1"/><Setter Property="TextColor" Value="White"/><Setter Property="CornerRadius" Value="10"/></Style>
+    </ContentPage.Resources>
+    <Grid>
+        <Grid RowDefinitions="Auto,*">
+            <Grid Padding="8,5" ColumnDefinitions="48,*,48" BackgroundColor="#0D0D0D">
+                <Button Text="‹" FontSize="32" BackgroundColor="Transparent" TextColor="White" Padding="0" Clicked="OnBackClicked"/>
+                <Label x:Name="ToolbarTitle" Grid.Column="1" Style="{StaticResource Title}" FontSize="17" VerticalTextAlignment="Center" MaxLines="1" LineBreakMode="TailTruncation"/>
+                <Button x:Name="FavoriteButton" Grid.Column="2" Text="☆" FontSize="24" BackgroundColor="Transparent" TextColor="#A0A0A0" Padding="0" Clicked="OnFavoriteClicked"/>
+            </Grid>
+            <ScrollView Grid.Row="1"><VerticalStackLayout Padding="16" Spacing="12">
+                <Label x:Name="ShipNameLabel" Style="{StaticResource Title}" FontSize="24"/>
+                <Label x:Name="ManufacturerLabel" TextColor="#A0A0A0" FontSize="17" HorizontalTextAlignment="Center"/>
+
+                <Border x:Name="ShipImagesCard" Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="6">
+                        <Grid HeightRequest="220">
+                            <Image x:Name="ShipImage" Aspect="AspectFit" InputTransparent="True"/>
+                            <Button BackgroundColor="Transparent" BorderWidth="0" Clicked="OnShipImageButtonClicked"/>
+                        </Grid>
+                        <Grid x:Name="ShipImageControls" ColumnDefinitions="Auto,*,Auto">
+                            <Button Text="‹ Prev" BackgroundColor="Transparent" TextColor="#D0D0D0" Clicked="OnPreviousShipImage"/>
+                            <Label x:Name="ShipImagePosition" Grid.Column="1" TextColor="#A0A0A0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                            <Button Grid.Column="2" Text="Next ›" BackgroundColor="Transparent" TextColor="#D0D0D0" Clicked="OnNextShipImage"/>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                    <Border x:Name="PricingCard" Style="{StaticResource Card}"><Border.GestureRecognizers><TapGestureRecognizer Tapped="OnPricingTapped"/></Border.GestureRecognizers>
+                        <VerticalStackLayout Spacing="6"><Label Text="Pricing" Style="{StaticResource Title}" FontSize="15"/><Label x:Name="AuecPriceLabel" TextColor="White" FontSize="13" HorizontalTextAlignment="Center"/><Label x:Name="PledgePriceLabel" TextColor="White" FontSize="13" HorizontalTextAlignment="Center"/></VerticalStackLayout>
+                    </Border>
+                    <Border x:Name="StatusCard" Grid.Column="1" Style="{StaticResource Card}"><Border.GestureRecognizers><TapGestureRecognizer Tapped="OnStatusTapped"/></Border.GestureRecognizers>
+                        <VerticalStackLayout Spacing="6"><Label Text="Status" Style="{StaticResource Title}" FontSize="15"/><Label x:Name="ProductionStatusLabel" TextColor="White" FontSize="13" HorizontalTextAlignment="Center"/><Label x:Name="SaleStatusLabel" TextColor="White" FontSize="13" HorizontalTextAlignment="Center"/></VerticalStackLayout>
+                    </Border>
+                </Grid>
+
+                <Border x:Name="DescriptionCard" Style="{StaticResource Card}"><VerticalStackLayout Spacing="5"><Label Text="Description" Style="{StaticResource Title}" FontSize="15"/><Label x:Name="DescriptionLabel" TextColor="#D0D0D0" FontSize="13" HorizontalTextAlignment="Center"/></VerticalStackLayout></Border>
+                <Border Style="{StaticResource Card}"><VerticalStackLayout Spacing="8"><Label Text="Specifications" Style="{StaticResource Title}" FontSize="17"/><VerticalStackLayout x:Name="SpecificationsStack" Spacing="6"/></VerticalStackLayout></Border>
+                <Border x:Name="ComponentsCard" Style="{StaticResource Card}"><Border.GestureRecognizers><TapGestureRecognizer Tapped="OnErkulTapped"/></Border.GestureRecognizers><VerticalStackLayout Spacing="7"><Label Text="Components" Style="{StaticResource Title}" FontSize="17"/><VerticalStackLayout x:Name="ComponentsStack" Spacing="5"/></VerticalStackLayout></Border>
+                <Border x:Name="WeaponsCard" Style="{StaticResource Card}"><Border.GestureRecognizers><TapGestureRecognizer Tapped="OnErkulTapped"/></Border.GestureRecognizers><VerticalStackLayout Spacing="7"><Label Text="Weapons &amp; Hardpoints" Style="{StaticResource Title}" FontSize="17"/><VerticalStackLayout x:Name="WeaponsStack" Spacing="5"/></VerticalStackLayout></Border>
+
+                <Border x:Name="PaintsCard" Style="{StaticResource Card}"><VerticalStackLayout Spacing="7"><Label Text="Available Paints" Style="{StaticResource Title}" FontSize="15"/><Label x:Name="PaintNameLabel" Style="{StaticResource Title}" FontSize="14"/><Grid HeightRequest="200"><Image x:Name="PaintImage" Aspect="AspectFit" InputTransparent="True"/><Button BackgroundColor="Transparent" BorderWidth="0" Clicked="OnPaintImageButtonClicked"/></Grid><Grid x:Name="PaintControls" ColumnDefinitions="Auto,*,Auto"><Button Text="‹ Prev" BackgroundColor="Transparent" TextColor="#D0D0D0" Clicked="OnPreviousPaint"/><Label x:Name="PaintPosition" Grid.Column="1" TextColor="#A0A0A0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/><Button Grid.Column="2" Text="Next ›" BackgroundColor="Transparent" TextColor="#D0D0D0" Clicked="OnNextPaint"/></Grid></VerticalStackLayout></Border>
+                <Border x:Name="ModulesCard" Style="{StaticResource Card}"><VerticalStackLayout Spacing="8"><Label Text="Available Modules" Style="{StaticResource Title}" FontSize="15"/><VerticalStackLayout x:Name="ModulesStack" Spacing="8"/></VerticalStackLayout></Border>
+                <ActivityIndicator x:Name="DetailLoading" Color="White"/>
+            </VerticalStackLayout></ScrollView>
+        </Grid>
+
+        <Grid x:Name="PricingOverlay" IsVisible="False" BackgroundColor="#B3000000" Padding="20">
+            <Border Style="{StaticResource Card}" MaximumWidthRequest="440" HorizontalOptions="Center" VerticalOptions="Center"><VerticalStackLayout Spacing="10"><Label Text="Pricing Options" Style="{StaticResource Title}" FontSize="20"/><Button Text="Pledge Store" Style="{StaticResource GrayButton}" Clicked="OnPledgeStoreClicked"/><Button Text="Find in CStone (aUEC)" Style="{StaticResource GrayButton}" Clicked="OnFinderClicked"/><Button Text="Close" BackgroundColor="Transparent" TextColor="#D0D0D0" Clicked="OnClosePricingClicked"/></VerticalStackLayout></Border>
+        </Grid>
+        <Grid x:Name="StatusOverlay" IsVisible="False" BackgroundColor="#B3000000" Padding="20">
+            <Border Style="{StaticResource Card}" MaximumWidthRequest="440" HorizontalOptions="Center" VerticalOptions="Center"><VerticalStackLayout Spacing="8"><Label Text="Ship Status" Style="{StaticResource Title}" FontSize="20"/><Label x:Name="StatusDialogText" TextColor="White" HorizontalTextAlignment="Center"/><VerticalStackLayout x:Name="LoanersStack" Spacing="4"/><Button Text="Close" BackgroundColor="Transparent" TextColor="#D0D0D0" Clicked="OnCloseStatusClicked"/></VerticalStackLayout></Border>
+        </Grid>
+    </Grid>
+</ContentPage>

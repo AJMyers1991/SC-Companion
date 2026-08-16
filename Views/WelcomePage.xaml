@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SCCompanion.Views.WelcomePage"
+             Title="SC Companion">
+
+    <Grid RowDefinitions="Auto,*,Auto" Padding="0">
+
+        <VerticalStackLayout Grid.Row="0" Padding="12,8,12,0" Spacing="0">
+            <Label Text="Made for the Star Citizen community with love by"
+                   FontSize="12"
+                   TextColor="#A0A0A0"
+                   HorizontalTextAlignment="Center" />
+
+            <HorizontalStackLayout HorizontalOptions="Center" Spacing="0">
+                <Label Text="turbo-virgin"
+                       FontSize="12"
+                       TextColor="#00BCD4"
+                       TextDecorations="Underline">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnCitizenClicked" />
+                    </Label.GestureRecognizers>
+                </Label>
+                <Label Text=" from " FontSize="12" TextColor="#A0A0A0" />
+                <Label Text="Frontier Intergalactic"
+                       FontSize="12"
+                       TextColor="#00BCD4"
+                       TextDecorations="Underline">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnOrganizationClicked" />
+                    </Label.GestureRecognizers>
+                </Label>
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+
+        <VerticalStackLayout Grid.Row="1" VerticalOptions="Center" HorizontalOptions="Center" Spacing="12">
+            <Image x:Name="LogoImage" Source="app_logo.png"
+                   HorizontalOptions="Center" Aspect="AspectFit" />
+            <Label x:Name="TitleLabel" Text="SC Companion"
+                   TextColor="#C0C0C0" FontAttributes="Bold"
+                   HorizontalOptions="Center" HorizontalTextAlignment="Center" />
+        </VerticalStackLayout>
+
+        <Grid Grid.Row="2" ColumnDefinitions="*,16,*" Padding="24,0,24,24" Margin="0,16,0,0">
+            <Border Grid.Column="0" BackgroundColor="#333333" StrokeShape="RoundRectangle 12"
+                    HeightRequest="140" Padding="12">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnStoreClicked" />
+                </Border.GestureRecognizers>
+                <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="8">
+                    <Image x:Name="StoreIcon" Source="icon_store_play.png"
+                           WidthRequest="64" HeightRequest="64"
+                           HorizontalOptions="Center" Aspect="AspectFit" />
+                    <Label x:Name="StoreLabel" Text="SC Companion"
+                           TextColor="#C0C0C0" FontSize="12"
+                           HorizontalOptions="Center" HorizontalTextAlignment="Center" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border Grid.Column="2" BackgroundColor="#333333" StrokeShape="RoundRectangle 12"
+                    HeightRequest="140" Padding="12">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnFeedbackClicked" />
+                </Border.GestureRecognizers>
+                <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="8">
+                    <Image Source="icon_feedback.png"
+                           WidthRequest="64" HeightRequest="64"
+                           HorizontalOptions="Center" Aspect="AspectFit" />
+                    <Label Text="Feedback"
+                           TextColor="#C0C0C0" FontSize="12"
+                           HorizontalOptions="Center" HorizontalTextAlignment="Center" />
+                </VerticalStackLayout>
+            </Border>
+        </Grid>
+
+    </Grid>
+</ContentPage>

@@ -1,0 +1,410 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:SCCompanion.Controls"
+             x:Class="SCCompanion.Views.WikeloPage"
+             Title="Wikelo"
+             BackgroundColor="#0D0D0D"
+             Shell.NavBarIsVisible="False">
+
+    <ContentPage.Resources>
+        <Style x:Key="HeroTitleStyle"
+               TargetType="Label">
+            <Setter Property="FontFamily" Value="OpenSansSemibold" />
+            <Setter Property="FontSize" Value="28" />
+            <Setter Property="CharacterSpacing" Value="1.2" />
+            <Setter Property="TextColor" Value="#FFFFFF" />
+            <Setter Property="HorizontalTextAlignment" Value="Center" />
+            <Setter Property="LineBreakMode" Value="WordWrap" />
+            <Setter Property="MaxLines" Value="2" />
+        </Style>
+
+        <Style x:Key="SearchSurfaceStyle"
+               TargetType="Border">
+            <Setter Property="BackgroundColor" Value="#242424" />
+            <Setter Property="Stroke" Value="#3A3A3A" />
+            <Setter Property="StrokeThickness" Value="1" />
+            <Setter Property="StrokeShape" Value="RoundRectangle 18" />
+            <Setter Property="Padding" Value="16,5" />
+        </Style>
+
+        <Style x:Key="ActionButtonStyle"
+               TargetType="Button">
+            <Setter Property="FontFamily" Value="OpenSansSemibold" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="TextColor" Value="White" />
+            <Setter Property="CornerRadius" Value="12" />
+            <Setter Property="MinimumHeightRequest" Value="44" />
+            <Setter Property="Padding" Value="18,12" />
+        </Style>
+
+        <Style x:Key="TradeCardStyle"
+               TargetType="Border">
+            <Setter Property="BackgroundColor" Value="#242424" />
+            <Setter Property="Stroke" Value="#333333" />
+            <Setter Property="StrokeThickness" Value="1" />
+            <Setter Property="StrokeShape" Value="RoundRectangle 14" />
+            <Setter Property="Padding" Value="16,16" />
+            <Setter Property="MinimumHeightRequest" Value="80" />
+        </Style>
+
+        <Style x:Key="FavoriteButtonStyle"
+               TargetType="Button">
+            <Setter Property="BackgroundColor" Value="Transparent" />
+            <Setter Property="BorderWidth" Value="0" />
+            <Setter Property="FontFamily" Value="OpenSansRegular" />
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="WidthRequest" Value="44" />
+            <Setter Property="HeightRequest" Value="44" />
+            <Setter Property="CornerRadius" Value="22" />
+        </Style>
+
+        <Style x:Key="ProviderLinkStyle"
+               TargetType="Label">
+            <Setter Property="FontFamily" Value="OpenSansSemibold" />
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="TextColor" Value="#007ACC" />
+            <Setter Property="TextDecorations" Value="Underline" />
+        </Style>
+
+        <Style x:Key="OverlayStyle"
+               TargetType="Grid">
+            <Setter Property="BackgroundColor" Value="#80000000" />
+            <Setter Property="IsVisible" Value="False" />
+        </Style>
+
+        <Style x:Key="OverlayCardStyle"
+               TargetType="Border">
+            <Setter Property="BackgroundColor" Value="#1E1E22" />
+            <Setter Property="Stroke" Value="#333333" />
+            <Setter Property="StrokeThickness" Value="1" />
+            <Setter Property="StrokeShape" Value="RoundRectangle 18" />
+            <Setter Property="Padding" Value="24,20" />
+            <Setter Property="MaximumWidthRequest" Value="400" />
+            <Setter Property="MaximumHeightRequest" Value="600" />
+        </Style>
+
+        <Style x:Key="ProgressItemStyle"
+               TargetType="Border">
+            <Setter Property="BackgroundColor" Value="#242424" />
+            <Setter Property="Stroke" Value="#333333" />
+            <Setter Property="StrokeThickness" Value="1" />
+            <Setter Property="StrokeShape" Value="RoundRectangle 12" />
+            <Setter Property="Padding" Value="16,12" />
+            <Setter Property="MinimumHeightRequest" Value="60" />
+        </Style>
+
+        <Style x:Key="InventoryItemStyle"
+               TargetType="Border">
+            <Setter Property="BackgroundColor" Value="#242424" />
+            <Setter Property="Stroke" Value="#333333" />
+            <Setter Property="StrokeThickness" Value="1" />
+            <Setter Property="StrokeShape" Value="RoundRectangle 12" />
+            <Setter Property="Padding" Value="16,14" />
+            <Setter Property="MinimumHeightRequest" Value="50" />
+        </Style>
+    </ContentPage.Resources>
+
+    <Grid>
+        <!-- Main content -->
+        <Grid Margin="18,4,18,16"
+              RowDefinitions="Auto,Auto,Auto,Auto,*"
+              RowSpacing="0"
+              MaximumWidthRequest="820"
+              HorizontalOptions="Fill">
+            
+            <!-- Row 0: Hero Section -->
+            <VerticalStackLayout Grid.Row="0"
+                                 Spacing="7"
+                                 Margin="0,4,0,12">
+                <Image Source="wikelo_page_logo.png"
+                       WidthRequest="136"
+                       HeightRequest="136"
+                       Aspect="AspectFit"
+                       HorizontalOptions="Center"
+                       SemanticProperties.Description="Wikelo logo" />
+
+                <Label Text="Wikelo Trades"
+                       Style="{StaticResource HeroTitleStyle}"
+                       SemanticProperties.HeadingLevel="Level1" />
+
+                <HorizontalStackLayout HorizontalOptions="Center"
+                                       Spacing="4">
+                    <Label Text="Data provided by"
+                           FontSize="12"
+                           TextColor="#A0A0A0"
+                           VerticalTextAlignment="Center" />
+                    <Label x:Name="ProviderLinkLabel"
+                           Text="Ruadhan2301"
+                           Style="{StaticResource ProviderLinkStyle}"
+                           VerticalTextAlignment="Center">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnProviderTapped" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                </HorizontalStackLayout>
+            </VerticalStackLayout>
+
+            <!-- Row 1: Search Section -->
+            <Border Grid.Row="1"
+                    Style="{StaticResource SearchSurfaceStyle}"
+                    Margin="0,0,0,12">
+                <Entry x:Name="SearchEntry"
+                       Placeholder="Search Wikelo trades..."
+                       PlaceholderColor="#777777"
+                       TextColor="#FFFFFF"
+                       BackgroundColor="Transparent"
+                       FontSize="16"
+                       ClearButtonVisibility="WhileEditing"
+                       ReturnType="Search"
+                       MinimumHeightRequest="48"
+                       TextChanged="OnSearchTextChanged"
+                       HandlerChanged="OnSearchEntryHandlerChanged"
+                       SemanticProperties.Description="Search for Wikelo trades" />
+            </Border>
+
+            <!-- Row 2: Action Buttons -->
+            <Grid Grid.Row="2"
+                  ColumnDefinitions="*,*"
+                  ColumnSpacing="12"
+                  Margin="0,0,0,12">
+                <Button Grid.Column="0"
+                        Text="My Progress"
+                        Style="{StaticResource ActionButtonStyle}"
+                        BackgroundColor="#404040"
+                        BorderColor="#555555"
+                        BorderWidth="1"
+                        Clicked="OnMyProgressClicked" />
+                <Button Grid.Column="1"
+                        Text="My Inventory"
+                        Style="{StaticResource ActionButtonStyle}"
+                        BackgroundColor="#404040"
+                        BorderColor="#555555"
+                        BorderWidth="1"
+                        Clicked="OnMyInventoryClicked" />
+            </Grid>
+
+            <!-- Row 3: Status and Activity -->
+            <HorizontalStackLayout Grid.Row="3"
+                                   HorizontalOptions="Center"
+                                   Spacing="8"
+                                   Margin="0,0,0,16">
+                <ActivityIndicator x:Name="SearchActivityIndicator"
+                                   IsRunning="False"
+                                   IsVisible="False"
+                                   Color="#FFFFFF"
+                                   WidthRequest="18"
+                                   HeightRequest="18" />
+                <Label x:Name="StatusLabel"
+                       IsVisible="False"
+                       TextColor="#A0A0A0"
+                       FontSize="13"
+                       HorizontalTextAlignment="Center"
+                       VerticalTextAlignment="Center"
+                       LineBreakMode="WordWrap" />
+            </HorizontalStackLayout>
+
+            <!-- Row 4: TradesCollectionView -->
+            <CollectionView Grid.Row="4"
+                            x:Name="TradesCollectionView"
+                            IsVisible="True"
+                            ItemsSource="{Binding Trades}"
+                            SelectionMode="Single"
+                            SelectionChanged="OnTradeSelected">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical"
+                                       ItemSpacing="12" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border Style="{StaticResource TradeCardStyle}">
+                            <Grid>
+                                <VerticalStackLayout Spacing="8"
+                                                     Margin="52,0">
+                                    <Label Text="{Binding MissionName}"
+                                           FontFamily="OpenSansSemibold"
+                                           FontSize="16"
+                                           TextColor="#FFFFFF"
+                                           LineBreakMode="WordWrap"
+                                           MaxLines="2"
+                                           HorizontalTextAlignment="Center" />
+                                    <Label Text="{Binding RewardText}"
+                                           FontFamily="OpenSansRegular"
+                                           FontSize="14"
+                                           TextColor="#A0A0A0"
+                                           LineBreakMode="WordWrap"
+                                           MaxLines="2"
+                                           HorizontalTextAlignment="Center" />
+                                    <Label Text="{Binding RequiredReputationText}"
+                                           FontFamily="OpenSansRegular"
+                                           FontSize="13"
+                                           TextColor="#888888"
+                                           LineBreakMode="WordWrap"
+                                           MaxLines="1"
+                                           HorizontalTextAlignment="Center" />
+                                </VerticalStackLayout>
+
+                                <Button Text="{Binding FavoriteGlyph}"
+                                        TextColor="{Binding FavoriteColor}"
+                                        Style="{StaticResource FavoriteButtonStyle}"
+                                        HorizontalOptions="End"
+                                        VerticalOptions="Start"
+                                        Margin="0,-4,-4,0"
+                                        CommandParameter="{Binding .}"
+                                        Clicked="OnFavoriteToggled" />
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+
+        <!-- Progress Overlay -->
+        <Grid x:Name="ProgressOverlay"
+              Style="{StaticResource OverlayStyle}">
+            <Border Style="{StaticResource OverlayCardStyle}"
+                    HorizontalOptions="Fill"
+                    Margin="24"
+                    VerticalOptions="Center">
+                <Grid RowDefinitions="Auto,*,Auto"
+                      RowSpacing="16">
+                    <Label Grid.Row="0"
+                           Text="My Progress"
+                           FontFamily="OpenSansSemibold"
+                           FontSize="20"
+                           TextColor="#FFFFFF"
+                           HorizontalTextAlignment="Center" />
+
+                    <CollectionView x:Name="ProgressCollectionView"
+                                    Grid.Row="1"
+                                    ItemsSource="{Binding ProgressItems}"
+                                    SelectionMode="Single"
+                                    SelectionChanged="OnProgressTradeSelected">
+                        <CollectionView.ItemsLayout>
+                            <LinearItemsLayout Orientation="Vertical"
+                                               ItemSpacing="8" />
+                        </CollectionView.ItemsLayout>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Border Style="{StaticResource ProgressItemStyle}">
+                                    <Grid RowDefinitions="Auto,Auto,Auto,Auto"
+                                          RowSpacing="4">
+                                        <Label Grid.Row="0"
+                                               Text="{Binding MissionName}"
+                                               FontFamily="OpenSansSemibold"
+                                               FontSize="14"
+                                               TextColor="#FFFFFF"
+                                               LineBreakMode="TailTruncation"
+                                               MaxLines="1"
+                                               HorizontalTextAlignment="Center" />
+                                        <Label Grid.Row="1"
+                                               Text="{Binding PercentageText}"
+                                               FontFamily="OpenSansRegular"
+                                               FontSize="13"
+                                               TextColor="{Binding ProgressColor}"
+                                               HorizontalTextAlignment="Center" />
+                                        <ProgressBar Grid.Row="2"
+                                                     Progress="{Binding Fraction}"
+                                                     ProgressColor="{Binding ProgressColor}"
+                                                     BackgroundColor="#333333"
+                                                     HeightRequest="6"
+                                                     Margin="0,2" />
+                                        <Label Grid.Row="3"
+                                               Text="{Binding QuantityText}"
+                                               FontFamily="OpenSansRegular"
+                                               FontSize="12"
+                                               TextColor="#A0A0A0"
+                                               HorizontalTextAlignment="Center" />
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+
+                    <Button Grid.Row="2"
+                            Text="Close"
+                            Style="{StaticResource ActionButtonStyle}"
+                            BackgroundColor="#404040"
+                            Clicked="OnCloseProgressModal" />
+                </Grid>
+            </Border>
+        </Grid>
+
+        <!-- Inventory Overlay -->
+        <Grid x:Name="InventoryOverlay"
+              Style="{StaticResource OverlayStyle}">
+            <Border Style="{StaticResource OverlayCardStyle}"
+                    HorizontalOptions="Fill"
+                    Margin="24"
+                    VerticalOptions="Center">
+                <Grid RowDefinitions="Auto,*,Auto"
+                      RowSpacing="16">
+                    <Label Grid.Row="0"
+                           Text="My Inventory"
+                           FontFamily="OpenSansSemibold"
+                           FontSize="20"
+                           TextColor="#FFFFFF"
+                           HorizontalTextAlignment="Center" />
+
+                    <Grid Grid.Row="1">
+                        <CollectionView x:Name="InventoryCollectionView"
+                                        IsVisible="False"
+                                        ItemsSource="{Binding InventoryItems}"
+                                        SelectionMode="None">
+                            <CollectionView.ItemsLayout>
+                                <LinearItemsLayout Orientation="Vertical"
+                                                   ItemSpacing="8" />
+                            </CollectionView.ItemsLayout>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Style="{StaticResource InventoryItemStyle}">
+                                        <Grid ColumnDefinitions="*,Auto"
+                                              ColumnSpacing="12">
+                                            <Label Grid.Column="0"
+                                                   Text="{Binding DisplayName}"
+                                                   FontFamily="OpenSansSemibold"
+                                                   FontSize="14"
+                                                   TextColor="#FFFFFF"
+                                                   LineBreakMode="TailTruncation"
+                                                   MaxLines="1"
+                                                   VerticalTextAlignment="Center" />
+                                            <Label Grid.Column="1"
+                                                   Text="{Binding QuantityText}"
+                                                   FontFamily="OpenSansRegular"
+                                                   FontSize="14"
+                                                   TextColor="#A0A0A0"
+                                                   VerticalTextAlignment="Center" />
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+
+                        <Label x:Name="InventoryEmptyLabel"
+                               IsVisible="False"
+                               Text="No inventory items tracked"
+                               FontFamily="OpenSansRegular"
+                               FontSize="14"
+                               TextColor="#A0A0A0"
+                               HorizontalTextAlignment="Center"
+                               VerticalTextAlignment="Center" />
+                    </Grid>
+
+                    <Button Grid.Row="2"
+                            Text="Close"
+                            Style="{StaticResource ActionButtonStyle}"
+                            BackgroundColor="#404040"
+                            Clicked="OnCloseInventoryModal" />
+                </Grid>
+            </Border>
+        </Grid>
+
+        <!-- Wikelo Navigation Loading Overlay -->
+        <controls:RocketLoadingIndicator x:Name="WikeloNavigationLoader"
+                                        IsRunning="False"
+                                        Message="Loading trade details..."
+                                        BackgroundColor="#80000000"
+                                        HorizontalOptions="Fill"
+                                        VerticalOptions="Fill" />
+    </Grid>
+</ContentPage>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:SCCompanion.Controls"
+             x:Class="SCCompanion.Views.GuideImageViewerPage"
+             Title=""
+             BackgroundColor="Black"
+             Shell.NavBarIsVisible="False"
+             Shell.TabBarIsVisible="False">
+
+    <Grid RowDefinitions="Auto,*,Auto">
+        <!-- Top bar with close button, title, and attribution -->
+        <Grid Grid.Row="0"
+              BackgroundColor="Black"
+              Padding="12,8"
+              ColumnDefinitions="44,*,44">
+            <!-- Close button -->
+            <Button Grid.Column="0"
+                    Text="✕"
+                    FontFamily="OpenSansRegular"
+                    FontSize="18"
+                    TextColor="#FFFFFF"
+                    BackgroundColor="Transparent"
+                    BorderWidth="0"
+                    Padding="0"
+                    WidthRequest="44"
+                    HeightRequest="44"
+                    HorizontalOptions="Start"
+                    Clicked="OnCloseClicked" />
+
+            <VerticalStackLayout Grid.Column="1"
+                                 Spacing="0"
+                                 VerticalOptions="Center">
+                <Label x:Name="GuideTitleLabel"
+                       FontFamily="OpenSansSemibold"
+                       FontSize="16"
+                       TextColor="#FFFFFF"
+                       HorizontalTextAlignment="Center"
+                       VerticalTextAlignment="Center"
+                       LineBreakMode="TailTruncation"
+                       MaxLines="1" />
+                <Button x:Name="AttributionButton"
+                        FontFamily="OpenSansRegular"
+                        FontSize="11"
+                        TextColor="#007ACC"
+                        BackgroundColor="Transparent"
+                        BorderWidth="0"
+                        Padding="2,0"
+                        HorizontalOptions="Center"
+                        Clicked="OnAttributionClicked" />
+            </VerticalStackLayout>
+        </Grid>
+
+        <!-- WebView for image content -->
+        <WebView Grid.Row="1"
+                 x:Name="ImageWebView"
+                 BackgroundColor="Black"
+                 HorizontalOptions="Fill"
+                 VerticalOptions="Fill" />
+
+        <!-- Bottom navigation panel -->
+        <Grid Grid.Row="2"
+              x:Name="NavigationPanel"
+              BackgroundColor="Black"
+              Padding="12,8"
+              ColumnDefinitions="Auto,*,Auto"
+              IsVisible="True">
+            <!-- Previous button -->
+            <Button Grid.Column="0"
+                    Text="← Previous"
+                    FontFamily="OpenSansRegular"
+                    FontSize="14"
+                    TextColor="#FFFFFF"
+                    BackgroundColor="#404040"
+                    BorderWidth="0"
+                    Padding="16,10"
+                    CornerRadius="8"
+                    HorizontalOptions="Start"
+                    Clicked="OnPreviousClicked" />
+
+            <!-- Page indicator -->
+            <Label Grid.Column="1"
+                   x:Name="PageLabel"
+                   FontFamily="OpenSansRegular"
+                   FontSize="12"
+                   TextColor="#A0A0A0"
+                   HorizontalTextAlignment="Center"
+                   VerticalTextAlignment="Center" />
+
+            <!-- Next button -->
+            <Button Grid.Column="2"
+                    Text="Next →"
+                    FontFamily="OpenSansRegular"
+                    FontSize="14"
+                    TextColor="#FFFFFF"
+                    BackgroundColor="#404040"
+                    BorderWidth="0"
+                    Padding="16,10"
+                    CornerRadius="8"
+                    HorizontalOptions="End"
+                    Clicked="OnNextClicked" />
+        </Grid>
+
+        <!-- Guide Loading Indicator Overlay -->
+        <controls:RocketLoadingIndicator Grid.Row="0"
+                                        Grid.RowSpan="3"
+                                        x:Name="GuideLoadingIndicator"
+                                        IsRunning="False"
+                                        Message="Loading high-resolution image..."
+                                        BackgroundColor="#80000000"
+                                        HorizontalOptions="Fill"
+                                        VerticalOptions="Fill" />
+    </Grid>
+</ContentPage>

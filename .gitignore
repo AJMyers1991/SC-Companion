@@ -1,0 +1,6 @@
+signing.props
+AppVersion.props
+**/bin/
+**/obj/
+**/.vs/
+SCCompanion.csproj.user

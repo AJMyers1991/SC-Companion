@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SCCompanion.Views.WikiPage"
+             Title="Wiki"
+             BackgroundColor="#0D0D0D"
+             Shell.NavBarIsVisible="False">
+
+    <ContentPage.Resources>
+        <Style x:Key="HeroTitleStyle"
+               TargetType="Label">
+            <Setter Property="FontFamily" Value="OpenSansSemibold" />
+            <Setter Property="FontSize" Value="28" />
+            <Setter Property="CharacterSpacing" Value="1.2" />
+            <Setter Property="TextColor" Value="#FFFFFF" />
+            <Setter Property="HorizontalTextAlignment" Value="Center" />
+            <Setter Property="LineBreakMode" Value="WordWrap" />
+            <Setter Property="MaxLines" Value="2" />
+        </Style>
+
+        <Style x:Key="SearchSurfaceStyle"
+               TargetType="Border">
+            <Setter Property="BackgroundColor" Value="#242424" />
+            <Setter Property="Stroke" Value="#3A3A3A" />
+            <Setter Property="StrokeThickness" Value="1" />
+            <Setter Property="StrokeShape" Value="RoundRectangle 18" />
+            <Setter Property="Padding" Value="16,5" />
+        </Style>
+
+        <Style x:Key="ResultCardStyle"
+               TargetType="Border">
+            <Setter Property="BackgroundColor" Value="#242424" />
+            <Setter Property="Stroke" Value="#333333" />
+            <Setter Property="StrokeThickness" Value="1" />
+            <Setter Property="StrokeShape" Value="RoundRectangle 14" />
+            <Setter Property="Padding" Value="16,14" />
+            <Setter Property="MinimumHeightRequest" Value="62" />
+        </Style>
+
+        <Style x:Key="SectionLabelStyle"
+               TargetType="Label">
+            <Setter Property="FontFamily" Value="OpenSansSemibold" />
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="CharacterSpacing" Value="0.8" />
+            <Setter Property="TextColor" Value="#A0A0A0" />
+        </Style>
+
+        <Style x:Key="ProviderLinkStyle"
+               TargetType="Label">
+            <Setter Property="FontFamily" Value="OpenSansSemibold" />
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="TextColor" Value="#007ACC" />
+            <Setter Property="TextDecorations" Value="Underline" />
+        </Style>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto,Auto,*"
+          RowSpacing="0"
+          Padding="18,4,18,16">
+        <VerticalStackLayout Grid.Row="0"
+                             MaximumWidthRequest="820"
+                             HorizontalOptions="Fill"
+                             Spacing="7"
+                             Margin="0,4,0,0">
+            <Image Source="link_starcitizentools.png"
+                   WidthRequest="136"
+                   HeightRequest="136"
+                   Aspect="AspectFit"
+                   HorizontalOptions="Center"
+                   SemanticProperties.Description="Star Citizen Tools logo" />
+
+            <Label Text="Star Citizen Wiki"
+                   Style="{StaticResource HeroTitleStyle}"
+                   SemanticProperties.HeadingLevel="Level1" />
+
+            <HorizontalStackLayout HorizontalOptions="Center"
+                                   Spacing="4">
+                <Label Text="Source"
+                       FontSize="12"
+                       TextColor="#A0A0A0"
+                       VerticalTextAlignment="Center" />
+                <Label x:Name="ProviderLinkLabel"
+                       Text="starcitizen.tools"
+                       Style="{StaticResource ProviderLinkStyle}"
+                       VerticalTextAlignment="Center">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnProviderTapped" />
+                    </Label.GestureRecognizers>
+                </Label>
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+
+        <Border Grid.Row="1"
+                Style="{StaticResource SearchSurfaceStyle}"
+                MaximumWidthRequest="820"
+                HorizontalOptions="Fill"
+                Margin="0,12,0,12">
+            <Entry x:Name="SearchEntry"
+                   Placeholder="Search anything..."
+                   PlaceholderColor="#777777"
+                   TextColor="#FFFFFF"
+                   BackgroundColor="Transparent"
+                   FontSize="16"
+                   ClearButtonVisibility="WhileEditing"
+                   ReturnType="Search"
+                   MinimumHeightRequest="48"
+                   TextChanged="OnSearchTextChanged"
+                   Focused="OnSearchFocused"
+                   Unfocused="OnSearchUnfocused"
+                   HandlerChanged="OnSearchEntryHandlerChanged"
+                   SemanticProperties.Description="Search the Star Citizen Wiki" />
+        </Border>
+
+        <Grid Grid.Row="2"
+              RowDefinitions="Auto,*"
+              MaximumWidthRequest="820"
+              HorizontalOptions="Fill"
+              RowSpacing="6">
+            <HorizontalStackLayout Grid.Row="0"
+                                   HorizontalOptions="Center"
+                                   Spacing="8"
+                                   Margin="0,0,0,4">
+                <ActivityIndicator x:Name="SearchActivityIndicator"
+                                   IsRunning="False"
+                                   IsVisible="False"
+                                   Color="#FFFFFF"
+                                   WidthRequest="18"
+                                   HeightRequest="18" />
+                <Label x:Name="StatusLabel"
+                       IsVisible="False"
+                       TextColor="#A0A0A0"
+                       FontSize="13"
+                       HorizontalTextAlignment="Center"
+                       VerticalTextAlignment="Center"
+                       LineBreakMode="WordWrap" />
+            </HorizontalStackLayout>
+
+            <Grid Grid.Row="1">
+                <Grid x:Name="RecentSection"
+                      IsVisible="False"
+                      RowDefinitions="Auto,*"
+                      RowSpacing="8">
+                    <Label Grid.Row="0"
+                           Text="RECENT SEARCHES"
+                           Style="{StaticResource SectionLabelStyle}"
+                           Margin="4,0" />
+
+                    <CollectionView x:Name="RecentSearchesView"
+                                    Grid.Row="1"
+                                    ItemsSource="{Binding RecentSearches}"
+                                    SelectionMode="Single"
+                                    SelectionChanged="OnRecentSearchSelected">
+                        <CollectionView.ItemsLayout>
+                            <LinearItemsLayout Orientation="Vertical"
+                                               ItemSpacing="8" />
+                        </CollectionView.ItemsLayout>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Border Style="{StaticResource ResultCardStyle}">
+                                    <Label Text="{Binding .}"
+                                           FontFamily="OpenSansSemibold"
+                                           FontSize="15"
+                                           TextColor="#FFFFFF"
+                                           LineBreakMode="TailTruncation"
+                                           MaxLines="1"
+                                           VerticalTextAlignment="Center" />
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </Grid>
+
+                <CollectionView x:Name="ResultsView"
+                                IsVisible="False"
+                                ItemsSource="{Binding Results}"
+                                SelectionMode="Single"
+                                SelectionChanged="OnResultSelected">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Vertical"
+                                           ItemSpacing="10" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Border Style="{StaticResource ResultCardStyle}">
+                                <VerticalStackLayout Spacing="5">
+                                    <Label Text="{Binding Title}"
+                                           FontFamily="OpenSansSemibold"
+                                           FontSize="16"
+                                           TextColor="#FFFFFF"
+                                           LineBreakMode="TailTruncation"
+                                           MaxLines="2" />
+                                    <Label Text="{Binding Snippet}"
+                                           FontFamily="OpenSansRegular"
+                                           FontSize="13"
+                                           TextColor="#A0A0A0"
+                                           LineBreakMode="TailTruncation"
+                                           MaxLines="2" />
+                                </VerticalStackLayout>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Grid>
+        </Grid>
+    </Grid>
+</ContentPage>

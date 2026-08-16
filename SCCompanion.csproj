@@ -1,0 +1,68 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<Import Project="AppVersion.props" />
+
+	<PropertyGroup>
+		<TargetFrameworks>net10.0-android;net10.0-ios;net10.0-maccatalyst</TargetFrameworks>
+		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net10.0-windows10.0.19041.0</TargetFrameworks>
+
+		<OutputType>Exe</OutputType>
+		<RootNamespace>SCCompanion</RootNamespace>
+		<UseMaui>true</UseMaui>
+		<SingleProject>true</SingleProject>
+				<ImplicitUsings>enable</ImplicitUsings>
+				<Nullable>enable</Nullable>
+				<NoWarn>$(NoWarn);NU1903;NU1904;XA4301</NoWarn>
+		<DefaultItemExcludes>$(DefaultItemExcludes);SCCompanion.Data\**;SCCompanion.Tests\**</DefaultItemExcludes>
+
+		<!-- Display name -->
+		<ApplicationTitle>SC Companion</ApplicationTitle>
+
+		<!-- App Identifier -->
+		<ApplicationId>com.sccompanion.app</ApplicationId>
+
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">15.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">15.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">$(AndroidMinSdkVersion).0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
+		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<!-- App Icon -->
+		<MauiIcon Include="Resources\AppIcon\appicon.png" BaseSize="1024,1024" Resize="false" />
+
+		<!-- Splash Screen -->
+		<MauiSplashScreen Include="Resources\Splash\splash.png" Color="#2d2d30" BaseSize="256,256" Resize="true" />
+
+		<!-- Images -->
+		<MauiImage Include="Resources\Images\*" />
+
+		<!-- Custom Fonts -->
+		<MauiFont Include="Resources\Fonts\*" />
+
+		<!-- Raw Assets -->
+		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="CommunityToolkit.Maui" Version="15.0.0" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="10.0.60" />
+		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.10" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="SCCompanion.Data\SCCompanion.Data.csproj" />
+	</ItemGroup>
+
+			<Import Project="signing.props" Condition="Exists('signing.props')" />
+			<PropertyGroup Condition="'$(Configuration)' == 'Release'">
+				<AndroidKeyStore>true</AndroidKeyStore>
+				<AndroidSigningKeyStore>C:\Users\AJMye\Android\Keystores\sc-companion-release.jks</AndroidSigningKeyStore>
+				<AndroidSigningStorePass>$(storePassword)</AndroidSigningStorePass>
+				<AndroidSigningKeyAlias>$(keyAlias)</AndroidSigningKeyAlias>
+				<AndroidSigningKeyPass>$(keyPassword)</AndroidSigningKeyPass>
+				<AndroidPackageFormat>aab</AndroidPackageFormat>
+			</PropertyGroup>
+
+	</Project>

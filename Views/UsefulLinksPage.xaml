@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:SCCompanion.Models"
+             x:Class="SCCompanion.Views.UsefulLinksPage"
+             x:Name="PageRoot"
+             Title="Useful Links"
+             BackgroundColor="#0D0D0D">
+
+    <ContentPage.Resources>
+        <Style x:Key="LinkCardStyle" TargetType="Border">
+            <Setter Property="BackgroundColor" Value="#242424" />
+            <Setter Property="StrokeThickness" Value="0" />
+            <Setter Property="StrokeShape" Value="RoundRectangle 12" />
+            <Setter Property="Padding" Value="12" />
+        </Style>
+
+        <Style x:Key="LinkLabelStyle" TargetType="Label">
+            <Setter Property="FontFamily" Value="OpenSansSemibold" />
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="TextColor" Value="#FFFFFF" />
+            <Setter Property="HorizontalTextAlignment" Value="Center" />
+            <Setter Property="LineBreakMode" Value="TailTruncation" />
+            <Setter Property="MaxLines" Value="2" />
+        </Style>
+
+        <Style x:Key="LinkDescriptionStyle" TargetType="Label">
+            <Setter Property="FontFamily" Value="OpenSansRegular" />
+            <Setter Property="FontSize" Value="10" />
+            <Setter Property="TextColor" Value="#A0A0A0" />
+            <Setter Property="HorizontalTextAlignment" Value="Center" />
+            <Setter Property="LineBreakMode" Value="TailTruncation" />
+            <Setter Property="MaxLines" Value="1" />
+        </Style>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto,*"
+          Padding="12,8,12,12"
+          RowSpacing="8">
+        <VerticalStackLayout Grid.Row="0"
+                             Spacing="3"
+                             Margin="0,4,0,10">
+            <Label Text="Useful Links"
+                   FontFamily="OpenSansSemibold"
+                   FontSize="20"
+                   TextColor="#FFFFFF"
+                   HorizontalTextAlignment="Center"
+                   SemanticProperties.HeadingLevel="Level1" />
+            <Label Text="Community tools and resources"
+                   FontFamily="OpenSansRegular"
+                   FontSize="11"
+                   TextColor="#A0A0A0"
+                   HorizontalTextAlignment="Center" />
+        </VerticalStackLayout>
+
+        <CollectionView Grid.Row="1"
+                        ItemsSource="{Binding Links}"
+                        SelectionMode="None"
+                        HorizontalOptions="Center"
+                        MaximumWidthRequest="520">
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Vertical"
+                                 Span="2"
+                                 HorizontalItemSpacing="12"
+                                 VerticalItemSpacing="12" />
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:UsefulLinkItem">
+                    <Border Style="{StaticResource LinkCardStyle}"
+                            WidthRequest="{Binding CardSize}"
+                            HeightRequest="{Binding CardSize}"
+                            HorizontalOptions="Center"
+                            SemanticProperties.Description="{Binding Description}">
+                        <Grid>
+                            <!-- Transparent underlay provides one large, reliable link target. -->
+                            <Button BackgroundColor="Transparent"
+                                    BorderWidth="0"
+                                    Padding="0"
+                                    ZIndex="0"
+                                    Clicked="OnLinkTapped"
+                                    CommandParameter="{Binding .}"
+                                    SemanticProperties.Description="{Binding Name, StringFormat='Open {0}'}" />
+
+                            <!-- Visual card content passes input through to the link target. -->
+                            <VerticalStackLayout InputTransparent="True"
+                                                 ZIndex="1"
+                                                 Spacing="7"
+                                                 Margin="8,14,8,8"
+                                                 HorizontalOptions="Center"
+                                                 VerticalOptions="Center">
+                                <Image Source="{Binding IconSource}"
+                                       WidthRequest="{Binding IconWidthRequest}"
+                                       HeightRequest="72"
+                                       Aspect="AspectFit"
+                                       HorizontalOptions="Center" />
+                                <Label Text="{Binding Name}"
+                                       Style="{StaticResource LinkLabelStyle}" />
+                                <Label Text="{Binding Description}"
+                                       Style="{StaticResource LinkDescriptionStyle}" />
+                            </VerticalStackLayout>
+
+                            <!-- The star sits above the link target and never opens the website. -->
+                            <ImageButton Source="{Binding FavoriteIconSource}"
+                                         CommandParameter="{Binding .}"
+                                         Clicked="OnFavoriteClicked"
+                                         BackgroundColor="Transparent"
+                                         WidthRequest="44"
+                                         HeightRequest="44"
+                                         Padding="11"
+                                         Margin="0,-4,-4,0"
+                                         HorizontalOptions="End"
+                                         VerticalOptions="Start"
+                                         ZIndex="2"
+                                         SemanticProperties.Description="{Binding FavoriteDescription}" />
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>
