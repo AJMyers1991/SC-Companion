@@ -51,12 +51,38 @@
             </VerticalStackLayout>
         </Grid>
 
-        <!-- WebView for image content -->
-        <WebView Grid.Row="1"
-                 x:Name="ImageWebView"
-                 BackgroundColor="Black"
-                 HorizontalOptions="Fill"
-                 VerticalOptions="Fill" />
+        <!-- Native image viewport with cross-platform pinch and one-finger pan. -->
+        <Grid Grid.Row="1"
+              x:Name="ImageViewport"
+              BackgroundColor="Black"
+              IsClippedToBounds="True"
+              HorizontalOptions="Fill"
+              VerticalOptions="Fill"
+              SizeChanged="OnImageViewportSizeChanged">
+            <Grid.GestureRecognizers>
+                <PinchGestureRecognizer PinchUpdated="OnImagePinchUpdated" />
+                <PanGestureRecognizer TouchPoints="1"
+                                      PanUpdated="OnImagePanUpdated" />
+            </Grid.GestureRecognizers>
+
+            <Image x:Name="GuideImage"
+                   Aspect="AspectFit"
+                   AnchorX="0"
+                   AnchorY="0"
+                   InputTransparent="True"
+                   HorizontalOptions="Fill"
+                   VerticalOptions="Fill" />
+
+            <Label x:Name="ImageErrorLabel"
+                   Text="Unable to load this guide image. Check your connection and try again."
+                   FontFamily="OpenSansRegular"
+                   FontSize="14"
+                   TextColor="#D0D0D0"
+                   HorizontalTextAlignment="Center"
+                   VerticalTextAlignment="Center"
+                   Margin="24"
+                   IsVisible="False" />
+        </Grid>
 
         <!-- Bottom navigation panel -->
         <Grid Grid.Row="2"

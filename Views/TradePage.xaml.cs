@@ -359,6 +359,16 @@ public partial class TradePage : ContentPage
             nativeEntry.BackgroundTintList =
                 Android.Content.Res.ColorStateList.ValueOf(Android.Graphics.Color.Transparent);
         }
+#elif IOS
+        if (sender is Entry entry &&
+            entry.Handler?.PlatformView is UIKit.UITextField nativeEntry)
+        {
+            // The rounded MAUI Border is the visible search surface. Remove the
+            // additional native UITextField border that iOS draws inside it.
+            nativeEntry.BorderStyle = UIKit.UITextBorderStyle.None;
+            nativeEntry.BackgroundColor = UIKit.UIColor.Clear;
+            nativeEntry.Layer.BorderWidth = 0;
+        }
 #endif
     }
 
