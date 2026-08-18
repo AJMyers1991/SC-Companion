@@ -1,5 +1,4 @@
 signing.props
-AppVersion.props
 **/bin/
 **/obj/
 **/.vs/

@@ -313,6 +313,7 @@ public partial class CraftingPage : ContentPage
                 Android.Content.Res.ColorStateList.ValueOf(Android.Graphics.Color.Transparent);
         }
 #endif
+        NativeSearchInputChrome.RemoveIosChrome(sender);
     }
 
     private void ShowStatus(string message)

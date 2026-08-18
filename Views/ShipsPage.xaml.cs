@@ -242,7 +242,11 @@ public partial class ShipsPage : ContentPage
         if (sender is Entry entry && entry.Handler?.PlatformView is AndroidX.AppCompat.Widget.AppCompatEditText native)
             native.BackgroundTintList = Android.Content.Res.ColorStateList.ValueOf(Android.Graphics.Color.Transparent);
 #endif
+        NativeSearchInputChrome.RemoveIosChrome(sender);
     }
+
+    private void OnIosSearchInputHandlerChanged(object? sender, EventArgs e) =>
+        NativeSearchInputChrome.RemoveIosChrome(sender);
 
     protected override bool OnBackButtonPressed()
     {

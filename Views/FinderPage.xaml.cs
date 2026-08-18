@@ -106,6 +106,7 @@ public partial class FinderPage : ContentPage
                 Android.Content.Res.ColorStateList.ValueOf(Android.Graphics.Color.Transparent);
         }
 #endif
+        NativeSearchInputChrome.RemoveIosChrome(sender);
     }
 
     private void OnRecentSearchSelected(object? sender, SelectionChangedEventArgs e)

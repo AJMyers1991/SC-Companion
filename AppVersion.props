@@ -1,0 +1,19 @@
+<Project>
+  <!--
+    Android release settings.
+
+    Edit these four values before generating a future APK or AAB:
+      AndroidMinSdkVersion    Minimum supported Android API level.
+      AndroidTargetSdkVersion Android API level targeted by the release.
+      ApplicationDisplayVersion User-visible versionName.
+      ApplicationVersion        Integer versionCode; must increase for every Play Store release.
+
+    The matching Android SDK platform must be installed before building.
+  -->
+  <PropertyGroup>
+    <AndroidMinSdkVersion>31</AndroidMinSdkVersion>
+    <AndroidTargetSdkVersion>36</AndroidTargetSdkVersion>
+    <ApplicationDisplayVersion>0.2.3</ApplicationDisplayVersion>
+    <ApplicationVersion>14</ApplicationVersion>
+  </PropertyGroup>
+</Project>

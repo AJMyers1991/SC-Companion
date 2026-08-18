@@ -118,6 +118,9 @@ public partial class GuidesPage : ContentPage
         ApplyCurrentView();
     }
 
+    private void OnSearchInputHandlerChanged(object? sender, EventArgs e) =>
+        NativeSearchInputChrome.RemoveIosChrome(sender);
+
     private void OnFolderClicked(object? sender, EventArgs e)
     {
         if (sender is not Button button ||

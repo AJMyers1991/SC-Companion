@@ -77,7 +77,8 @@
                    PlaceholderColor="#A0A0A0"
                    BackgroundColor="#242424"
                    Margin="16,0,16,12"
-                   TextChanged="OnSearchTextChanged" />
+                   TextChanged="OnSearchTextChanged"
+                   HandlerChanged="OnSearchInputHandlerChanged" />
 
         <!-- Result count -->
         <Label Grid.Row="2"

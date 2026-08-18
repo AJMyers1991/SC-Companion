@@ -23,6 +23,7 @@ public partial class GuideImageViewerPage : ContentPage
     private double _panStartX;
     private double _panStartY;
     private bool _isPinching;
+    private bool _hasActivePan;
 #if ANDROID
     private Android.Graphics.Bitmap? _androidBitmap;
 #endif
@@ -229,6 +230,7 @@ public partial class GuideImageViewerPage : ContentPage
         {
             case GestureStatus.Started:
                 _isPinching = true;
+                _hasActivePan = false;
                 _pinchStartScale = _currentScale;
                 _pinchStartX = GuideImage.TranslationX;
                 _pinchStartY = GuideImage.TranslationY;
@@ -272,19 +274,25 @@ public partial class GuideImageViewerPage : ContentPage
 
     private void OnImagePanUpdated(object? sender, PanUpdatedEventArgs e)
     {
-        if (_isPinching || _currentScale <= MinimumScale)
-        {
-            return;
-        }
-
         switch (e.StatusType)
         {
             case GestureStatus.Started:
+                _hasActivePan = !_isPinching && _currentScale > MinimumScale;
+                if (!_hasActivePan)
+                {
+                    return;
+                }
+
                 _panStartX = GuideImage.TranslationX;
                 _panStartY = GuideImage.TranslationY;
                 break;
 
             case GestureStatus.Running:
+                if (!_hasActivePan || _isPinching || _currentScale <= MinimumScale)
+                {
+                    return;
+                }
+
                 ApplyImageTransform(
                     _panStartX + e.TotalX,
                     _panStartY + e.TotalY);
@@ -292,7 +300,12 @@ public partial class GuideImageViewerPage : ContentPage
 
             case GestureStatus.Completed:
             case GestureStatus.Canceled:
-                ApplyImageTransform(GuideImage.TranslationX, GuideImage.TranslationY);
+                if (_hasActivePan)
+                {
+                    ApplyImageTransform(GuideImage.TranslationX, GuideImage.TranslationY);
+                }
+
+                _hasActivePan = false;
                 break;
         }
     }
@@ -331,6 +344,7 @@ public partial class GuideImageViewerPage : ContentPage
         _panStartX = 0;
         _panStartY = 0;
         _isPinching = false;
+        _hasActivePan = false;
         GuideImage.Scale = MinimumScale;
         GuideImage.TranslationX = 0;
         GuideImage.TranslationY = 0;

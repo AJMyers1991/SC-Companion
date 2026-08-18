@@ -104,12 +104,12 @@
                         <HorizontalStackLayout><CheckBox x:Name="FlightReadyCheck"/><Label Text="Flight Ready" TextColor="White" VerticalTextAlignment="Center"/></HorizontalStackLayout>
                         <HorizontalStackLayout><CheckBox x:Name="ConceptCheck"/><Label Text="In Concept" TextColor="White" VerticalTextAlignment="Center"/></HorizontalStackLayout>
                         <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
-                            <Entry x:Name="MinScuEntry" Placeholder="Min SCU" Keyboard="Numeric" Style="{StaticResource FilterEntry}"/>
-                            <Entry x:Name="MaxScuEntry" Grid.Column="1" Placeholder="Max SCU" Keyboard="Numeric" Style="{StaticResource FilterEntry}"/>
+                            <Entry x:Name="MinScuEntry" Placeholder="Min SCU" Keyboard="Numeric" Style="{StaticResource FilterEntry}" HandlerChanged="OnIosSearchInputHandlerChanged"/>
+                            <Entry x:Name="MaxScuEntry" Grid.Column="1" Placeholder="Max SCU" Keyboard="Numeric" Style="{StaticResource FilterEntry}" HandlerChanged="OnIosSearchInputHandlerChanged"/>
                         </Grid>
                         <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
-                            <Entry x:Name="MinPriceEntry" Placeholder="Min Price" Keyboard="Numeric" Style="{StaticResource FilterEntry}"/>
-                            <Entry x:Name="MaxPriceEntry" Grid.Column="1" Placeholder="Max Price" Keyboard="Numeric" Style="{StaticResource FilterEntry}"/>
+                            <Entry x:Name="MinPriceEntry" Placeholder="Min Price" Keyboard="Numeric" Style="{StaticResource FilterEntry}" HandlerChanged="OnIosSearchInputHandlerChanged"/>
+                            <Entry x:Name="MaxPriceEntry" Grid.Column="1" Placeholder="Max Price" Keyboard="Numeric" Style="{StaticResource FilterEntry}" HandlerChanged="OnIosSearchInputHandlerChanged"/>
                         </Grid>
                         <HorizontalStackLayout><CheckBox x:Name="AuecPriceCheck"/><Label Text="Price is in aUEC (vs USD pledge)" FontSize="12" TextColor="White" VerticalTextAlignment="Center"/></HorizontalStackLayout>
                     </VerticalStackLayout></ScrollView>
@@ -125,7 +125,7 @@
             <Border Style="{StaticResource ModalCard}" HorizontalOptions="Center" VerticalOptions="Center" Padding="0">
                 <Grid RowDefinitions="Auto,Auto,*,Auto" MinimumHeightRequest="480">
                     <Label x:Name="SelectionTitleLabel" Text="Select options" Padding="20,16" FontFamily="OpenSansSemibold" FontSize="20" TextColor="White" HorizontalTextAlignment="Center"/>
-                    <Entry x:Name="SelectionSearchEntry" Grid.Row="1" Margin="16,0,16,10" Placeholder="Search or tap to browse..." Style="{StaticResource FilterEntry}" TextChanged="OnSelectionSearchChanged"/>
+                    <Entry x:Name="SelectionSearchEntry" Grid.Row="1" Margin="16,0,16,10" Placeholder="Search or tap to browse..." Style="{StaticResource FilterEntry}" TextChanged="OnSelectionSearchChanged" HandlerChanged="OnIosSearchInputHandlerChanged"/>
                     <CollectionView x:Name="SelectionOptionsView" Grid.Row="2" ItemsSource="{Binding SelectionOptions}" SelectionMode="Single" SelectionChanged="OnSelectionOptionSelected">
                         <CollectionView.ItemTemplate>
                             <DataTemplate x:DataType="models:ShipFilterOptionViewItem">
